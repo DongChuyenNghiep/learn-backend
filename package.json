@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "node --watch index.js",
+    "build:ui": "@powershell Remove-Item -Recurse -Force dist && cd C:/Users/minht/Documents/GitHub/learning-react-js/introdemo && npm run build && @powershell Copy-Item dist -Recurse C:/Users/minht/Documents/GitHub/learn-backend",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Dong Chuyen Nghiep",

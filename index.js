@@ -1,13 +1,11 @@
 const http = require('http')
 const express = require('express')
-const morgan = require("morgan");
-const { error } = require('console')
 const cors = require('cors')
 
 const app = express()
 app.use(express.json())
 app.use(cors())
-
+app.use(express.static('dist'))
 let N = 20
 let notes = [
     {
@@ -26,7 +24,7 @@ let notes = [
         important: true
     }
 ]
-let person = [
+let persons = [
     {
         "id": "1",
         "name": "Arto Hellas",
@@ -100,10 +98,10 @@ app.delete('/api/notes/:id', (request, response) => {
 })
 
 app.get('/api/persons', (request, response) => {
-    response.json(person)
+    response.json(persons)
 })
 app.get('/info', (request, response) => {
-    getlength = person.length;
+    getlength = persons.length;
     const gettime = new Date()
     response.send(`
         <p>Phonebook has info for ${getlength} people</p>
@@ -112,7 +110,7 @@ app.get('/info', (request, response) => {
 })
 app.get('/api/persons/:id', (request, response) => {
     const id = request.params.id
-    const persontofind = person.find(person => person.id === id)
+    const persontofind = persons.find(persons => persons.id === id)
     if (persontofind) {
         response.json(persontofind)
     } else {
@@ -121,7 +119,7 @@ app.get('/api/persons/:id', (request, response) => {
 })
 app.delete('/api/persons/:id',(request,response)=> {
     const id = request.params.id
-    persontodelete = person.filter(person => person.id !== id)
+    persontodelete = persons.filter(persons => persons.id !== id)
     response.status(204).end()
 })
 app.post('/api/persons',(req,res)=>{
@@ -129,7 +127,7 @@ app.post('/api/persons',(req,res)=>{
     if (!body.name || !body.number) {
         return res.status(400).json({error:'Missing body'})
     }
-    const isSame = person.some(person => person.name.toLowerCase()===body.name.toLowerCase() || person.number.toLowerCase()===body.number.toLowerCase())
+    const isSame = persons.some(persons => persons.name.toLowerCase()===body.name.toLowerCase() || persons.number.toLowerCase()===body.number.toLowerCase())
     if (isSame){
         return res.status(400).json({ error: 'name must be unique' })
     }else{
@@ -138,7 +136,7 @@ app.post('/api/persons',(req,res)=>{
             name : body.name,
             number: body.number
         }
-        person = person.concat(per)
+        persons = persons.concat(per)
         res.status(201).json(per)
     }
     
