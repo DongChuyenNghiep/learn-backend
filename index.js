@@ -119,7 +119,7 @@ app.get('/api/persons/:id', (request, response) => {
 })
 app.delete('/api/persons/:id',(request,response)=> {
     const id = request.params.id
-    persontodelete = persons.filter(persons => persons.id !== id)
+    persons = persons.filter(person => person.id !== id)
     response.status(204).end()
 })
 app.post('/api/persons',(req,res)=>{
@@ -142,6 +142,21 @@ app.post('/api/persons',(req,res)=>{
     
     
 })
+app.put('/api/persons/:id', (req, res) => { 
+    const id = req.params.id;
+    const { name, number } = req.body; // Lấy dữ liệu mới từ request body
+
+    const index = persons.findIndex(person => person.id === id);
+
+    if (index === -1) {
+        return res.status(404).json({ error: "Person not found" });
+    }
+
+    // Cập nhật thông tin người dùng
+    persons[index] = { ...persons[index], name, number };
+
+    res.json(persons[index]); // Trả về dữ liệu sau khi cập nhật
+});
 const PORT = process.env.PORT || 3001
 app.listen(PORT)
 console.log(`Server running on port ${PORT}`)
