@@ -165,7 +165,7 @@ app.post('/api/persons', (req, res, next) => {
     });
 });
 
-app.put('/api/persons/:id', (req, res) => {
+app.put('/api/persons/:id', (req, res,next) => {
     const id = req.params.id;
     const { name, number } = req.body; // Lấy dữ liệu mới từ request body
     Phonebook.findByIdAndUpdate(
