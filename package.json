@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "lint": "eslint .",
     "dev": "node --watch index.js",
     "build:ui": "@powershell Remove-Item -Recurse -Force dist && cd C:/Users/minht/Documents/GitHub/learning-react-js/introdemo && npm run build && @powershell Copy-Item dist -Recurse C:/Users/minht/Documents/GitHub/learn-backend",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,5 +19,11 @@
     "mongodb": "^6.13.1",
     "mongoose": "^8.10.1",
     "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.21.0",
+    "@stylistic/eslint-plugin-js": "^4.0.1",
+    "eslint": "^9.21.0",
+    "globals": "^16.0.0"
   }
 }
