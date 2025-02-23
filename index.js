@@ -159,7 +159,7 @@ app.post('/api/persons', (req, res, next) => {
 
         newPerson.save().then(savedPerson => {
             res.status(201).json(savedPerson);
-        });
+        }).catch(error => next(error));
     }).catch(error => {
         next(error)
     });
@@ -171,7 +171,7 @@ app.put('/api/persons/:id', (req, res) => {
     Phonebook.findByIdAndUpdate(
         id,
         { name, number },
-        { new: true, runValidators: true }
+        { new: true, runValidators: true, context: 'query' }
     )
         .then(updatedPerson => {
             if (!updatedPerson) {
